@@ -21,9 +21,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import RBF
 
-__author__ = "Nongnuch Artrith"
-__email__ = "nartrith@atomistic.net"
-__date__ = "2019-11-10"
+__author__ = "Nongnuch Artrith & Erik Griffioen"
+__email__ = "d.e.griffioen@students.uu.nl"
+__date__ = "2022-09-06"
 __version__ = "0.1"
 
 
@@ -47,13 +47,13 @@ def plot_predictions(predictions, data):
 
 
 def RFR(features, targets):
-    model = RandomForestRegressor(
-        max_depth=9, n_estimators=15, random_state=False, verbose=False)
+    model = RandomForestRegressor(max_depth=9, n_estimators=15, random_state=False, verbose=False)
     N = len(features)
     F = features
     T = targets.values
     predictions = []
     errors = []
+    "doing cross-validation"
     for i in range(N):
         idx = np.ones(N, dtype=bool)
         idx[i] = False
@@ -104,6 +104,7 @@ def model(dft_data):
     features = features_all[select]
     targets = targets_all[select]
 
+
     # fit models and plot predictions
     model_rfr, predictions_rfr, rmse_rfr, mae_rfr = RFR(features, targets)
     model_gpr, predictions_gpr, rmse_gpr, mae_gpr = GPR(features, targets)
@@ -139,5 +140,4 @@ if (__name__ == "__main__"):
         nargs="?")
 
     args = parser.parse_args()
-
     model(args.dft_data)
